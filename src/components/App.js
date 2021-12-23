@@ -32,7 +32,9 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [messagePopup, setMessagePopup] = React.useState({ icon: "", text: "" })
+  const jwt = localStorage.getItem("jwt")
   const nav = useNavigate()
+
 
 
   //описание авторизации
@@ -99,12 +101,12 @@ function App() {
   function handleSignOut() {
     setLoggedIn(false);
     localStorage.removeItem("jwt");
+    localStorage.removeItem('email');
     setEmail('');
     nav('/sign-in');
   }
 
   React.useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
     if (jwt) {
       auth.checkToken(jwt)
         .then((data) => {
@@ -121,24 +123,28 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    api.getUserData()
+    if (loggedIn) {
+      api.getUserData()
       .then((data) => {
         setCurrentUser(data)
       })
       .catch((err) => {
         console.log(err)
       });
-  }, [])
+    }
+  }, [loggedIn])
 
   React.useEffect(() => {
-    api.getCardsData()
+    if (loggedIn) {
+      api.getCardsData()
       .then((data) => {
         setCards(data)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [])
+    }
+  }, [loggedIn])
 
 
   function handleCardLike(card) {
