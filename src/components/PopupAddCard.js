@@ -1,3 +1,4 @@
+import react from "react";
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
@@ -22,13 +23,19 @@ function PopupAddCard({ isOpen, onClose, buttonText, onAddPlace }) {
         })
     }
 
+    React.useEffect(() => {
+        setLink('');
+        setName('')
+
+      }, [isOpen])
+
 
     return (
         <PopupWithForm isOpen={isOpen} onClose={onClose} buttonText={buttonText} handleSubmit={handleSubmit} title="Новое место" name="add_card">
             <input type="text" className="form__text" name="card_title" placeholder="Название" 
-            onChange={handleChangeName}  maxLength={30} required />
+            onChange={handleChangeName} value={name} maxLength={30} required />
             <span className="form__error" id="card_title-error"></span>
-            <input type="url" className="form__text" name="card_link" placeholder="Ссылка на картинку" onChange={handleChangeLink} required />
+            <input type="url" className="form__text" name="card_link" value={link} placeholder="Ссылка на картинку" onChange={handleChangeLink} required />
             <span className="form__error" id="card_link-error"></span>
         </PopupWithForm>
     )
