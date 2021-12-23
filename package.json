@@ -1,6 +1,6 @@
 {
   "homepage": "https://jeromejer.github.io/",
-  "name": "mesto-react-main",
+  "name": "react-mesto-auth",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
